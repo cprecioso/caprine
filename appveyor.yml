@@ -1,0 +1,31 @@
+init:
+  - git config --global core.autocrlf input
+
+version: "{build}"
+
+environment:
+  nodejs_version: "Stable"
+
+cache:
+  - "node_modules -> package.json"
+  - "%APPDATA%\\npm-cache"
+  - "%USERPROFILE%\\.electron"
+
+platform:
+  - x86
+
+install:
+  - ps: Install-Product node Stable x86
+  - npm install
+
+build_script:
+  - node --version
+  - npm --version
+  - npm run build:windows
+
+test: off
+
+artifacts:
+  - path: dist\installers\*
+
+deploy: off
